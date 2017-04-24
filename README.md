@@ -4,7 +4,7 @@ This tool uses the Medical Expenditure Panel Survey data to simulate the distrib
 
 Healthcare spend is bimodal in log space, with one peak at $0 and the other a function of demographic data. This tool uses a logistic regression to predict the odds of spending $0, and a regularized linear regression to predict the mean and standard deviation of the log of non-zero healthcare costs. 
 
-To generate the csv processed csv files, download the h171.dat file from the (MEPS website)[https://meps.ahrq.gov/mepsweb/data_stats/download_data_files_detail.jsp?cboPufNumber=HC-171], then run the command:
+To generate the csv processed csv files, download the h171.dat file from the [MEPS website](https://meps.ahrq.gov/mepsweb/data_stats/download_data_files_detail.jsp?cboPufNumber=HC-171), then run the command:
 
 python extract_csv.py -file h171.dat -schema 171_schema.ini
 
