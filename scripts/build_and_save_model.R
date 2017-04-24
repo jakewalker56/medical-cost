@@ -1,7 +1,7 @@
 library(gamlr)
 set.seed(0)
 
-setwd("~/github/medical_cost/data")
+setwd("~/github/medical-cost/data")
 data = read.csv("processed_data.csv")
 
 #Since we're predicitng costs, we should only count people as having 

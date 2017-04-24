@@ -1,5 +1,7 @@
 library(shiny)
-setwd("~/github/medical_cost/shinyapp")
+library(gamlr)
+library(Matrix)
+#setwd("~/github/medical-cost/shinyapp")
 source("server.R")
 source("ui.R")
 shinyApp(ui=ui, server=server)

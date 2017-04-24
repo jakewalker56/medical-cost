@@ -1,4 +1,4 @@
-setwd("~/github/medical_cost/shinyapp")
+#setwd("~/github/medical-cost/shinyapp")
 load("medical_cost_reg.rda")
 load("medical_cost_var.rda")
 load("medical_cost_zero.rda")
@@ -6,6 +6,8 @@ load("factor_col_names.rda")
 load("levels.rda")
 load("formula.rda")
 library(scales)
+library(Matrix)
+library(gamlr)
 
 smax <- 10000
 
@@ -73,7 +75,7 @@ server <- function(input, output) {
           "predict the odds of spending $0, and a regularized linear regression to ",
           "predict the mean and standard deviation of the log of non-zero healthcare costs. ",
           "You can find the code and data for this tool ",
-          "<a href='https://github.com/jakewalker56/medical_cost'>here</a>.</p>",
+          "<a href='https://github.com/jakewalker56/medical-cost'>here</a>.</p>",
   
           "</div>",
           sep="")

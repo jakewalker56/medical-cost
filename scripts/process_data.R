@@ -1,4 +1,4 @@
-setwd("~/github/medical_cost/data")
+setwd("~/github/medical-cost/data")
 data = read.csv("raw_data.csv")
 
 #drop any row without an age, because... huh?
