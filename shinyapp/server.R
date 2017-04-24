@@ -96,7 +96,7 @@ server <- function(input, output) {
     #d <- hist(sim[sim > 0 & sim < smax], breaks = bins)
     d <- hist(sim[sim < smax], breaks = bins)
     #d <- density(sim[sim > 0 & sim < smax])
-    plot(d, main="Simulation of 1,000 people like you")
+    plot(d, main="Simulation of 1,000 people like you", xlab="total cost")
     #polygon(d, col="red", border="blue")
   })
   output$zeroPercentageText <- renderText({
