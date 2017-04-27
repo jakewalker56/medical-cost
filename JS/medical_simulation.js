@@ -156,8 +156,8 @@ var trace = {
   x: aggregate,
   type: 'histogram',
   xbins: {
-    end: max + 100, 
-    size: 100, 
+    end: max, 
+    size: (max + 1)/points, 
     start: 0
   }
 };
