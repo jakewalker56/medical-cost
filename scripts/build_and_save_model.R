@@ -120,6 +120,16 @@ testmat <- sparse.model.matrix(
 predict(reg, newdata=matrix(testmat,nrow=1), select="min")[1]
 coef(reg, select="min")
 
+testval <- nonzero_data[,-grep(c("TOTEXP|DUID|PID|HRWG|PERWT|HASWG|DIABAGE"),colnames(nonzero_data))]
+testval <- sparse.model.matrix(
+  custom_formula, 
+  data=testval[testval$CANCER==TRUE,])[,-1]
+
+hist(predict(reg, newdata=testval, select="min")[,1])
+hist(log(data[data$CANCER == TRUE, "TOTEXP"] + 1))
+
+coef(varreg, select="min")
+
 1/(1+exp(-predict(zeroreg, newdata=matrix(testmat,nrow=1), select="1se", type="link")))[,1]
 
 coef(zeroreg, select="1se")
