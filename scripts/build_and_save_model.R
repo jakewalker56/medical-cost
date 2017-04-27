@@ -1,4 +1,5 @@
 library(gamlr)
+library(jsonlite)
 set.seed(0)
 
 setwd("~/github/medical-cost/data")
@@ -13,7 +14,6 @@ data$DIAB <- data$DIAB & (data$AGE - data$DIABAGE > 1)
 #convert categorical variables to factors
 data$BORNUSA <- factor(data$BORNUSA)
 data$EMP <- factor(data$EMP)
-data$HASWG <- factor(data$HASWG)
 data$PREG <- factor(data$PREG)
 data$EDU <- factor(data$EDU)
 data$DIAB <- factor(data$DIAB)
@@ -23,15 +23,15 @@ data$RACE <- factor(data$RACE)
 data$SEX <- factor(data$SEX)
 data$LT5 <- factor(data$AGE < 5)
 data$LT10 <- factor(data$AGE < 10)
+data$MT21 <- factor(data$AGE > 21)
 factor_col_names <- c("BORNUSA", "SEX", "RACE", "MARRY", "CANCER", "DIAB", "EDU", "PREG","EMP", "LT5", "LT10")
 
-#Normalize BMI to average
-data$BMI <- abs(data$BMI - 26)
+#Normalize BMI to midpoint of "healthy"
+data$BMI <- (data$BMI - 22)^2
 
 custom_levels = list(
   BORNUSA=levels(data$BORNUSA),
   EMP=levels(data$EMP),
-  HASWG=levels(data$HASWG),
   PREG=levels(data$PREG),
   EDU=levels(data$EDU),
   DIAB=levels(data$DIAB),
@@ -40,7 +40,8 @@ custom_levels = list(
   RACE=levels(data$RACE),
   SEX=levels(data$SEX),
   LT5=levels(data$LT5),
-  LT10=levels(data$LT10)
+  LT10=levels(data$LT10),
+  MT10=levels(data$MT10)
   )
 
 data$SALARY <- log(data$SALARY + 1)
@@ -50,9 +51,9 @@ zero_data <- data
 zero_data$is_zero <- zero_data$TOTEXP <= 0
 zero_data <- zero_data[,-grep("TOTEXP", colnames(zero_data))]
 
-custom_formula <- as.formula("~ . + HASWG*SALARY*EMP*HOUR + SEX*PREG*AGE + BMI*AGE + (LT5+LT10)*AGE")
+custom_formula <- as.formula("~ . + SALARY*EMP*HOUR + SEX*PREG*AGE + BMI*AGE + (LT5+LT10)*AGE + EDU*MT21")
 yval <- log(nonzero_data$TOTEXP + 1)
-xval <- nonzero_data[,-grep(c("TOTEXP|DUID|PID|HRWG|PERWT|DIABAGE"),colnames(nonzero_data))]
+xval <- nonzero_data[,-grep(c("TOTEXP|DUID|PID|HRWG|PERWT|HASWG|DIABAGE"),colnames(nonzero_data))]
 xval <- sparse.model.matrix(
    custom_formula, 
   data=xval)[,-1]
@@ -72,10 +73,10 @@ hist((exp(predict(varreg, select="min", newdata=xval)[,1]) - 1))
 
 #model occurence of zero cost
 zeroy <- zero_data$is_zero
-zerox <- zero_data[,-grep(c("is_zero|DUID|PID|HRWG|PERWT|DIABAGE"),colnames(zero_data))]
+zerox <- zero_data[,-grep(c("is_zero|DUID|PID|HRWG|PERWT|HASWG|DIABAGE"),colnames(zero_data))]
 zerox <- sparse.model.matrix(
   custom_formula, 
-  data=zerox, contrasts.arg = custom_contrasts)[,-1]
+  data=zerox)[,-1]
 zeroreg <- cv.gamlr(x=zerox, y=zeroy, lmr=1e-05, family="binomial")
 coef(zeroreg, select="min")
 #show predicted rate of zero across all users
@@ -88,12 +89,24 @@ save(custom_levels, file = "../shinyapp/levels.rda")
 save(factor_col_names, file = "../shinyapp/factor_col_names.rda")
 save(custom_formula, file ="../shinyapp/formula.rda")
 
-test <- data.frame(BORNUSA=TRUE, AGE=30, BMI=21,
+regdf <- as.data.frame(as.matrix(coef(reg, select="min")))
+colnames(regdf) <- c("coefficient")
+write(toJSON(regdf, digits=8), "reg.json")
+
+varregdf <- as.data.frame(as.matrix(coef(varreg, select="min")))
+colnames(varregdf) <- c("coefficient")
+write(toJSON(varregdf, digits=8), "verreg.json")
+
+zeroregdf <- as.data.frame(as.matrix(coef(zeroreg, select="1se")))
+colnames(zeroregdf) <- c("coefficient")
+write(toJSON(zeroregdf, digits=8), "zeroreg.json")
+
+test <- data.frame(BORNUSA=TRUE, AGE=30, BMI=9.654336734693882,
                    SEX=TRUE, RACE="1", MARRY="1", 
-                   CANCER=FALSE, DIAB=FALSE, EDU="-1", 
-                   HOUR=40, HASWG=(1 > 0), PREG=FALSE, 
-                   EMP=(1 > 0), SALARY=log(1+ 1),
-                   LT5=FALSE, LT10=FALSE)
+                   CANCER=FALSE, DIAB=FALSE, EDU="15", 
+                   HOUR=40, PREG=FALSE, 
+                   EMP=TRUE, SALARY=13.527829818844937,
+                   LT5=FALSE, LT10=FALSE, MT21=TRUE)
 for(col in factor_col_names) {
   {
     test[,col] <- factor(test[,col], levels=custom_levels[col][[1]])
@@ -105,6 +118,9 @@ testmat <- sparse.model.matrix(
   data=test)[,-1]
 
 predict(reg, newdata=matrix(testmat,nrow=1), select="min")[1]
+coef(reg, select="min")
+
 1/(1+exp(-predict(zeroreg, newdata=matrix(testmat,nrow=1), select="1se", type="link")))[,1]
 
 coef(zeroreg, select="1se")
+

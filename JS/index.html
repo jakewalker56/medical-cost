@@ -1,0 +1,105 @@
+
+<form action="./index.html" method="get">
+
+Age: 
+<input type="range" name="AGE" value="30" min="1" max="80" onchange="updateTextInput(this.value, 'AGE');">
+<input type="text" id="AGEOutput" value="30">
+<br />
+
+Height (in inches): 
+<input type="range" name="HEIGHT" value="70" min="10" max="100" onchange="updateTextInput(this.value, 'HEIGHT');">
+<input type="text" id="HEIGHTOutput" value="70">
+<br />
+
+
+Weight (in pounds):
+<input type="range" name="WEIGHT" value="175" min="10" max="300" onchange="updateTextInput(this.value, 'WEIGHT');">
+<input type="text" id="WEIGHTOutput" value="175">
+<br />
+
+
+Hours worked per Week:
+<input type="range" name="HOUR" value="40" min="0" max="80" onchange="updateTextInput(this.value, 'HOUR');">
+<input type="text" id="HOUROutput" value="40">
+<br />
+
+
+Annual Salary:
+<input type="range" name="SALARY" value="75000" min="0" max="300000" onchange="updateTextInput(this.value, 'SALARY');">
+<input type="text" id="SALARYOutput" value="75000">
+<br />
+
+
+Gender:
+<br>
+<input type="radio" name="SEX" value="male" checked> Male<br>
+<input type="radio" name="SEX" value="female"> Female
+<br />
+
+Born in the USA?
+<input type="checkbox" id="BORNUSA" name="BORNUSA" checked>
+<br>
+
+Race:
+<br>
+<select name="RACE">
+  <option value="1" selected>White</option>
+  <option value="2">Black</option>
+  <option value="3">American Indian/Alaskan</option>
+  <option value="4">Asia/Pacific Islander</option>
+  <option value="6">Multiple Races/Other</option>
+</select>
+<br>
+
+Marital Status:
+<br>
+<select name="MARRY">
+  <option value="1" selected>Married</option>
+  <option value="2">Widowed</option>
+  <option value="3">Divorced</option>
+  <option value="4">Separated</option>
+  <option value="5">Never Married</option>
+  <option value="6">Under 16/Inapplicable</option>
+</select>
+
+<br>
+
+Education Level:
+<br>
+<select name="EDU">
+  <option value="-1">Inapplicable or under 5</option>
+  <option value="1">Less than 8th grade</option>
+  <option value="2">9th-12th grade, no HS diploma</option>
+  <option value="13">GED or HS grad</option>
+  <option value="14">Some College or Associates Degree</option>
+  <option value="15" selected>Bachelor's Degree</option>
+  <option value="16">Masters, Doctorate, or Professional Degree</option>
+</select>
+<br>
+
+Do any of these conditions apply to you?
+<br>
+<input type="checkbox" id="conditions" name="CANCER" unchecked> Cancer
+<br>
+<input type="checkbox" id="conditions" name="DIAB" unchecked> Diabetes
+<br>
+<input type="checkbox" id="conditions" name="PREG" unchecked> Pregnant
+
+<br>
+<input type="submit" value="Submit" />
+
+</form>
+
+<div>
+	<p id="pred">pred</p>
+	<p id="varpred">var</p>
+	<p id="zeropred">zero</p>
+</div>
+<div id="myDiv" style="width: 800px; height: 400px;">
+<!-- Plotly chart will be drawn inside this DIV -->
+	
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="medical_simulation.js"></script>

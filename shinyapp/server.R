@@ -24,12 +24,12 @@ sparsify <- function(tinput, factor_dict){
   
 }
 simulate_costs <- function(input, iterations){
-  tinput <- data.frame(BORNUSA=input$BORNUSA, AGE=input$AGE, BMI=abs(input$BMI - 26),
+  tinput <- data.frame(BORNUSA=input$BORNUSA, AGE=input$AGE, BMI=(input$BMI - 22)^2,
                        SEX=input$SEX, RACE=input$RACE, MARRY=input$MARRY, 
                        CANCER=("CANCER" %in% input$conditions), DIAB=("DIAB" %in% input$conditions), EDU=input$EDU, 
-                       HOUR=input$HOUR, HASWG=(input$SALARY > 0), PREG=("PREG" %in% input$conditions), 
+                       HOUR=input$HOUR, PREG=("PREG" %in% input$conditions), 
                        EMP=input$SALARY > 0, SALARY=log(input$SALARY + 1), 
-                       LT5=(input$AGE < 5), LT10=(input$AGE < 10))
+                       LT5=(input$AGE < 5), LT10=(input$AGE < 10), GT21=(input$AGE > 21))
   
   tinput <- sparsify(tinput, custom_levels) 
   zinput <- Matrix(tinput, nrow=1)
