@@ -14,22 +14,24 @@ smax <- 10000
 sparsify <- function(tinput, factor_dict){
   for(col in factor_col_names) {
     {
+      print(col)
       tinput[,col] <- factor(tinput[,col], levels=factor_dict[col][[1]])
     }
   }
+  tinput[2,] <- tinput[1,]
   return(sparse.model.matrix(
     custom_formula, 
-    data=tinput)[,-1]
+    data=tinput)[1,-1]
     )
   
 }
 simulate_costs <- function(input, iterations){
-  tinput <- data.frame(BORNUSA=input$BORNUSA, AGE=input$AGE, BMI=(input$BMI - 22)^2,
+  tinput <- data.frame(BORNUSA=input$BORNUSA, AGE=input$AGE, BMI=abs(input$BMI - 22),
                        SEX=input$SEX, RACE=input$RACE, MARRY=input$MARRY, 
                        CANCER=("CANCER" %in% input$conditions), DIAB=("DIAB" %in% input$conditions), EDU=input$EDU, 
                        HOUR=input$HOUR, PREG=("PREG" %in% input$conditions), 
                        EMP=input$SALARY > 0, SALARY=log(input$SALARY + 1), 
-                       LT5=(input$AGE < 5), LT10=(input$AGE < 10), GT21=(input$AGE > 21))
+                       LT5=(input$AGE < 5), LT10=(input$AGE < 10), MT21=(input$AGE > 21), BMI2=(input$BMI - 22)^2)
   
   tinput <- sparsify(tinput, custom_levels) 
   zinput <- Matrix(tinput, nrow=1)
