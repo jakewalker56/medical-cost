@@ -52,7 +52,7 @@ zero_data <- data
 zero_data$is_zero <- zero_data$TOTEXP <= 0
 zero_data <- zero_data[,-grep("TOTEXP", colnames(zero_data))]
 
-custom_formula <- as.formula("~ . + SALARY*EMP*HOUR*RACE + SEX*PREG*AGE + MT21*AGE*DIAB*CANCER + (LT5+LT10+MT21)*AGE*(BMI+BMI2) + EDU*MT21*RACE")
+custom_formula <- as.formula("~ . + SALARY*EMP*HOUR*RACE + MT21*AGE*DIAB*CANCER + AGE*PREG*(BMI+BMI2) + (LT5+LT10+MT21)*AGE*SEX*(BMI+BMI2) + EDU*MT21*RACE")
 yval <- log(nonzero_data$TOTEXP + 1)
 xval <- nonzero_data[,-grep(c("TOTEXP|DUID|PID|HRWG|PERWT|HASWG|DIABAGE"),colnames(nonzero_data))]
 xval <- sparse.model.matrix(
@@ -133,3 +133,5 @@ hist(log(data[data$CANCER == TRUE, "TOTEXP"] + 1))
 
 1/(1+exp(-predict(zeroreg, newdata=matrix(testmat[1,],nrow=1), select="1se", type="link")))[,1]
 
+summary(reg)
+coef(reg, select="min")
