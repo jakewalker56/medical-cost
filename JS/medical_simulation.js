@@ -180,7 +180,7 @@ function run(){
 	zeropred =  1/(1+Math.exp(-predict(zeroreg, input)))
 
 	//run the simulation!!!  Sort the output to make median calculation easy later
-	sim = simulate(pred, varpred, zeropred, 1000).sort(sortNumber)
+	sim = simulate(pred, varpred, zeropred, 5000).sort(sortNumber)
 
 	//output the model results- this should only be for error checking, should be removed from final version
 	document.getElementById("pred").innerHTML = "Lognormal distribution mean: " + pred
