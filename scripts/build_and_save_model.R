@@ -133,5 +133,8 @@ hist(log(data[data$CANCER == TRUE, "TOTEXP"] + 1))
 
 1/(1+exp(-predict(zeroreg, newdata=matrix(testmat[1,],nrow=1), select="1se", type="link")))[,1]
 
+data
+log(sum(data$TOTEXP * data$PERWT)/sum(data$PERWT))
+
 summary(reg)
 coef(reg, select="min")

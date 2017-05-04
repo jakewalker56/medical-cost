@@ -1,48 +1,49 @@
 
+<div style="width: 400px; overflow: auto; float: left">
 <form action="./index.html" method="get">
 
 Age: 
-<input type="range" name="AGE" value="30" min="1" max="80" onchange="updateTextInput(this.value, 'AGE');">
+<input class="ms-input" type="range" name="AGE" value="30" min="1" max="80" onchange="updateTextInput(this.value, 'AGE');">
 <input type="text" id="AGEOutput" value="30">
 <br />
 
 Height (in inches): 
-<input type="range" name="HEIGHT" value="70" min="10" max="100" onchange="updateTextInput(this.value, 'HEIGHT');">
+<input class="ms-input" type="range" name="HEIGHT" value="70" min="10" max="100" onchange="updateTextInput(this.value, 'HEIGHT');">
 <input type="text" id="HEIGHTOutput" value="70">
 <br />
 
 
 Weight (in pounds):
-<input type="range" name="WEIGHT" value="175" min="10" max="300" onchange="updateTextInput(this.value, 'WEIGHT');">
+<input class="ms-input" type="range" name="WEIGHT" value="175" min="10" max="300" onchange="updateTextInput(this.value, 'WEIGHT');">
 <input type="text" id="WEIGHTOutput" value="175">
 <br />
 
 
 Hours worked per Week:
-<input type="range" name="HOUR" value="40" min="0" max="80" onchange="updateTextInput(this.value, 'HOUR');">
+<input class="ms-input" type="range" name="HOUR" value="40" min="0" max="80" onchange="updateTextInput(this.value, 'HOUR');">
 <input type="text" id="HOUROutput" value="40">
 <br />
 
 
 Annual Salary:
-<input type="range" name="SALARY" value="75000" min="0" max="300000" onchange="updateTextInput(this.value, 'SALARY');">
+<input class="ms-input" type="range" name="SALARY" value="75000" min="0" max="300000" onchange="updateTextInput(this.value, 'SALARY');">
 <input type="text" id="SALARYOutput" value="75000">
 <br />
 
 
 Gender:
 <br>
-<input type="radio" name="SEX" value="male" checked> Male<br>
-<input type="radio" name="SEX" value="female"> Female
+<input class="ms-input" type="radio" name="SEX" value="male" checked> Male<br>
+<input class="ms-input" type="radio" name="SEX" value="female"> Female
 <br />
 
 Born in the USA?
-<input type="checkbox" id="BORNUSA" name="BORNUSA" checked>
+<input class="ms-input" type="checkbox" id="BORNUSA" name="BORNUSA" checked>
 <br>
 
 Race:
 <br>
-<select name="RACE">
+<select class="ms-input" name="RACE">
   <option value="1" selected>White</option>
   <option value="2">Black</option>
   <option value="3">American Indian/Alaskan</option>
@@ -53,7 +54,7 @@ Race:
 
 Marital Status:
 <br>
-<select name="MARRY">
+<select class="ms-input" name="MARRY">
   <option value="1" selected>Married</option>
   <option value="2">Widowed</option>
   <option value="3">Divorced</option>
@@ -66,7 +67,7 @@ Marital Status:
 
 Education Level:
 <br>
-<select name="EDU">
+<select class="ms-input" name="EDU">
   <option value="-1">Inapplicable or under 5</option>
   <option value="1">Less than 8th grade</option>
   <option value="2">9th-12th grade, no HS diploma</option>
@@ -79,18 +80,16 @@ Education Level:
 
 Do any of these conditions apply to you?
 <br>
-<input type="checkbox" id="conditions" name="CANCER" unchecked> Cancer
+<input class="ms-input" type="checkbox" id="conditions" name="CANCER" unchecked> Cancer
 <br>
-<input type="checkbox" id="conditions" name="DIAB" unchecked> Diabetes
+<input class="ms-input" type="checkbox" id="conditions" name="DIAB" unchecked> Diabetes
 <br>
-<input type="checkbox" id="conditions" name="PREG" unchecked> Pregnant
-
-<br>
-<input type="submit" value="Submit" />
+<input class="ms-input" type="checkbox" id="conditions" name="PREG" unchecked> Pregnant
 
 </form>
+</div>
 
-<div>
+<div style="width: 400px; overflow: auto; float: left">
 	<div id="pred">pred</div>
 	<div id="varpred">var</div>
 	<div id="zeropred">zero</div>
@@ -100,7 +99,7 @@ Do any of these conditions apply to you?
 	<div id="maxpercent">zero</div>
 
 </div>
-<div id="myDiv" style="width: 800px; height: 400px;">
+<div id="myDiv" style="width: 800px; height: 400px; float:left">
 <!-- Plotly chart will be drawn inside this DIV -->
 	
 </div>

@@ -24,14 +24,33 @@ function drawNormal(mean, sd) {
 
 //another silly helper function- fills out the input dictionary with values
 function populateInput(){
-	var urlParams = new URLSearchParams(window.location.search);
+
+	//var urlParams = new URLSearchParams(window.location.search);
 	var input= {};
-	for(var key of urlParams.keys()) {
-		input[key] = urlParams.get(key)
-		if(input[key] == "on") {
-			input[key] = 1;
+	//for(var key of urlParams.keys()) {
+	//	input[key] = urlParams.get(key)
+	//	if(input[key] == "on") {
+	//		input[key] = 1;
+	//	}
+	//}
+
+	for(var element of document.getElementsByClassName("ms-input")){
+		if(element.type == "radio"){
+			if(element.checked){
+				input[element.name] = element.value;	
+			}
+		} else if (element.type == "checkbox"){
+			if(element.checked){
+				input[element.name] = 1;	
+			} else {
+				input[element.name] = 0;
+			}			
+		} else {
+			input[element.name] = element.value;
 		}
 	}
+	console.log(input)
+
 	//Note these values must match the column names in the R model
 	//e.g. there is a RACE column in the R model, and we must name that term "RACE" in our input
 
@@ -149,66 +168,70 @@ function simulate(pred, varpred, zeropred, iterations){
 	return sim;
 }
 
-input = populateInput();
+function run(){
+	input = populateInput();
+	pred = predict(reg, input)
+	
+	//we actually predict the log of variance in log space, and what we want 
+	//is the standard deviation in log space, so we have to transform it
+	varpred = Math.pow((Math.exp(predict(varreg, input)) - 1), 0.5)
+
+	//Logistic regression means we transform with the logit function
+	zeropred =  1/(1+Math.exp(-predict(zeroreg, input)))
+
+	//run the simulation!!!  Sort the output to make median calculation easy later
+	sim = simulate(pred, varpred, zeropred, 1000).sort(sortNumber)
+
+	//output the model results- this should only be for error checking, should be removed from final version
+	document.getElementById("pred").innerHTML = "Lognormal distribution mean: " + pred
+	document.getElementById("varpred").innerHTML = "Lognormal distribution standard deviation: " + varpred
+	document.getElementById("zeropred").innerHTML = Math.round(100.0 * zeropred) + "% of people like you spend $0 at the doctor"
+
+	//calculate mean, median, etc. since javascript is less cool than R
+	var max = 10000
+	z = 0;
+	total = 0;
+	m = 0;
+	for(i=0;i<sim.length;i++){
+		total += sim[i]
+		if(sim[i] == 0){
+			z++;
+		}
+		if(sim[i] > max){
+			m++;
+		}
+	}
+	//console.log(sim)
+	//Should basically match the values output by the R shiny app
+	document.getElementById("mean").innerHTML = "Mean: " + Math.round(total/sim.length)
+	document.getElementById("median").innerHTML = "Median: " + Math.round(sim[Math.round(sim.length / 2)]) 
+	document.getElementById("zeropercent").innerHTML = "Zeroes: " + z 
+	document.getElementById("maxpercent").innerHTML = "Above " + max + ": " + m
+
+	//do some basic plotting
+	buckets = 40
+	var trace = {
+	  x: sim,
+	  type: 'histogram',
+	  xbins: {
+	    end: max, 
+	    size: (max + 1)/buckets, 
+	    start: sim[0]
+	  }
+	};
+	var data = [trace];
+	Plotly.newPlot('myDiv', data);
+}
 
 reg = loadReg();
 varreg = loadVarreg();
 zeroreg = loadZeroreg();
+run();
 
-pred = predict(reg, input)
-//we actually predict the log of variance in log space, and what we want 
-//is the standard deviation in log space, so we have to transform it
-varpred = Math.pow((Math.exp(predict(varreg, input)) - 1), 0.5)
-
-//Logistic regression means we transform with the logit function
-zeropred =  1/(1+Math.exp(-predict(zeroreg, input)))
-
-//run the simulation!!!  Sort the output to make median calculation easy later
-sim = simulate(pred, varpred, zeropred, 1000).sort(sortNumber)
-
-//output the model results- this should only be for error checking, should be removed from final version
-document.getElementById("pred").innerHTML = "Lognormal distribution mean: " + pred
-document.getElementById("varpred").innerHTML = "Lognormal distribution standard deviation: " + varpred
-document.getElementById("zeropred").innerHTML = Math.round(100.0 * zeropred) + "% of people like you spend $0 at the doctor"
-
-//calculate mean, median, etc. since javascript is less cool than R
-var max = 10000
-z = 0;
-total = 0;
-m = 0;
-for(i=0;i<sim.length;i++){
-	total += sim[i]
-	if(sim[i] == 0){
-		z++;
-	}
-	if(sim[i] > max){
-		m++;
-	}
+for(var element of document.getElementsByClassName("ms-input")){
+	element.addEventListener("change", function (e) {
+	    run();
+	});		
 }
-console.log(sim)
-//Should basically match the values output by the R shiny app
-document.getElementById("mean").innerHTML = "Mean: " + Math.round(total/sim.length)
-document.getElementById("median").innerHTML = "Median: " + Math.round(sim[Math.round(sim.length / 2)]) 
-document.getElementById("zeropercent").innerHTML = "Zeroes: " + z 
-document.getElementById("maxpercent").innerHTML = "Above " + max + ": " + m
-
-
-//do some basic plotting
-buckets = 40
-var trace = {
-  x: sim,
-  type: 'histogram',
-  xbins: {
-    end: max, 
-    size: (max + 1)/buckets, 
-    start: sim[0]
-  }
-};
-
-
-var data = [trace];
-
-Plotly.newPlot('myDiv', data);
-
 
 //http://extoxnet.orst.edu/faqs/dietcancer/web2/twohowto.html
