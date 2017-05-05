@@ -124,19 +124,21 @@
     // input dictionary with values
     function populateInput(){
       var input = {};
-      for (var element of document.getElementsByClassName('ms-input')) {
-        if (element.type == 'radio'){
-          if (element.checked){
-            input[element.name] = element.value;  
+
+      var inputs = document.getElementsByClassName('ms-input');
+      for (var i=0; i < inputs.length; i++) {
+        if (inputs[i].type == 'radio'){
+          if (inputs[i].checked){
+            input[inputs[i].name] = inputs[i].value;  
           }
-        } else if (element.type == 'checkbox'){
-          if (element.checked) {
-            input[element.value] = 1;  
+        } else if (inputs[i].type == 'checkbox'){
+          if (inputs[i].checked) {
+            input[inputs[i].value] = 1;  
           } else {
-            input[element.value] = 0;
+            input[inputs[i].value] = 0;
           }     
         } else {
-          input[element.name] = element.value;
+          input[inputs[i].name] = inputs[i].value;
         }
       }
 
@@ -319,12 +321,13 @@
 
 
     // add event listeners for all the input elements
-    for (var element of document.getElementsByClassName('ms-input')) {
-      if (element.type == 'range') {
+    var inputs = document.getElementsByClassName('ms-input');
+    for (var i=0; i < inputs.length; i++) {
+      if (inputs[i].type == 'range') {
         // not sure why data-attr isn't working for SALARY, 
         // I need to investigate this later.
-        var from = element.name == 'SALARY' ? '50000' : element.value; 
-        $(element).ionRangeSlider({
+        var from = inputs[i].name == 'SALARY' ? '50000' : inputs[i].value; 
+        $(inputs[i]).ionRangeSlider({
           from: from,
           onFinish: function (data) {
             data.input.context.value = data.from;
@@ -332,9 +335,8 @@
           },
         });
       } else {
-        element.addEventListener('change', run);   
+        inputs[i].addEventListener('change', run);   
       }
-      
     }
 
     // init chart
