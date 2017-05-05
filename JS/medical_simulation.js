@@ -55,7 +55,8 @@
         .domain( x.domain() )
         .thresholds( x.ticks(40) )(data.x); // 40 bins
 
-      var y = d3.scaleLinear().domain([0, d3.max(bins, function(d) { return d.length; })])
+      var y = d3.scaleLinear()
+        .domain([0, d3.max(bins, function(d) { return d.length; })]) // replace with [0, 5000] for static y-axis
         .range([height, 0]);
 
       // update bars
