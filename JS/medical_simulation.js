@@ -47,8 +47,6 @@
         .attr('height', dimensions[1]);
       this.g.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      console.log(data)
-
       var x =  d3.scaleLinear().rangeRound([0, width]).domain([0, data.xbins.end])
 
       var bins = d3.histogram()
@@ -150,12 +148,25 @@
       // those are the values
       // we must use in our select inputs as well
 
+      //we're dividing by height, so make sure it's not zero
+      input['HEIGHT'] = Math.max(parseInt(input['HEIGHTFT'] * 12) + parseInt(input['HEIGHTIN']), 1)
+
       // calculate BMI from height and weight 
       // see http:// www.thecalculatorsite.com/articles/health/bmi-formula-for-bmi-calculations.php
+      var BMI = 703 * input['WEIGHT'] / Math.pow(input['HEIGHT'], 2);
+      //convert to levels
+      if(BMI < 18.5){
+        input['BMI'] = 1;
+      } else if (BMI < 25){
+        input['BMI'] = 2;
+      } else if (BMI < 30){
+        input['BMI'] = 3;
+      } else if (BMI < 40){
+        input['BMI'] = 4;
+      } else {
+        input['BMI'] = 5;
+      }
 
-      input['BMI'] = Math.abs(703 * input['WEIGHT'] / Math.pow(input['HEIGHT'], 2) - 22);
-      input['BMI2'] = Math.pow(input['BMI'], 2);
-      
       // Transform salary to log space as we do in the R model
       input['SALARY'] = Math.log(input['SALARY'] + 1);
 
@@ -170,7 +181,6 @@
       // It's weird to encode MALE as TRUE, so we just transform it here instead
       input['SEX']= (input['SEX'] == 'male') ? 1 : 0;
 
-      console.log(input)
       return input;
     }
 
@@ -225,13 +235,8 @@
             }
           }
           if(isNaN(val)){
-            // This is ok if it's one of the unchecked 
-            // condition checkboxes
-            // e.g. if you don't check 'Pregnant', 
-            // rather than input['PREG'] == false,
-            // it just won't be included in the input dictionary.  
-            // Default to 0.
-            // console.log('Failed to find input term for ' + term);
+            //This is an error case we should never hit
+            console.log('Failed to find input term for ' + term);
             val = 0;
           }
           termresult *= val;
@@ -255,6 +260,7 @@
     }
 
     function run() { 
+      var iterations = 5000;
       var input = populateInput();
       var pred = predict(REG, input);
       
@@ -267,7 +273,7 @@
 
       // run the simulation 5000 times!!!  
       // Sort the output to make median calculation easy later
-      var sim = simulate(pred, varpred, zeropred, 5000).sort(function (a,b) {
+      var sim = simulate(pred, varpred, zeropred, iterations).sort(function (a,b) {
         return a - b;
       });
 
@@ -290,11 +296,13 @@
       // output the model results
       // document.getElementById('pred').innerHTML = 'Lognormal distribution mean: ' + pred;
       // document.getElementById('varpred').innerHTML = 'Lognormal distribution standard deviation: ' + varpred;
-      document.getElementById('zeropred').innerHTML = '<strong>' + Math.round(100.0 * zeropred) + ' percent</strong> of people like you don&rsquo;t go to the doctor at all.';
-      document.getElementById('mean').innerHTML = 'Average: people like you spend an <strong>average of ' + moneyFormat2(Math.round(total/sim.length)) + '</strong> on health care per year.';
-      document.getElementById('median').innerHTML = 'Median: people like you <strong>typically spend ' + moneyFormat2(Math.round(sim[Math.round(sim.length / 2)])) + '</strong> on health care per year.';
-      document.getElementById('zeropercent').innerHTML = 'Zeroes: ' + commaFormat(z) ;
-      document.getElementById('maxpercent').innerHTML = 'Above ' + moneyFormat2(max) + ': ' + commaFormat(m);
+      document.getElementById('iterations').innerHTML = commaFormat(iterations);
+      document.getElementById('mean').innerHTML = moneyFormat2(Math.round(total/sim.length));
+      document.getElementById('median').innerHTML =  moneyFormat2(Math.round(sim[Math.round(sim.length / 2)]));
+      document.getElementById('zeropercent').innerHTML = commaFormat(Math.round(100*z/iterations));
+      //document.getElementById('maxval').innerHTML = moneyFormat2(max);
+      //document.getElementById('maxpercent').innerHTML = commaFormat(Math.round(100*m/iterations));
+      document.getElementById('toptwopercent').innerHTML = moneyFormat2(Math.round(sim[Math.round(iterations * 0.98)]));
 
       // do some basic plotting
       var buckets = 40;
