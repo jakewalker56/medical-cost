@@ -1,109 +1,135 @@
-
-<div style="width: 400px; overflow: auto; float: left">
-<form action="./index.html" method="get">
-
-Age: 
-<input class="ms-input" type="range" name="AGE" value="30" min="1" max="80" onchange="updateTextInput(this.value, 'AGE');">
-<input type="text" id="AGEOutput" value="30">
-<br />
-
-Height (in inches): 
-<input class="ms-input" type="range" name="HEIGHT" value="70" min="10" max="100" onchange="updateTextInput(this.value, 'HEIGHT');">
-<input type="text" id="HEIGHTOutput" value="70">
-<br />
-
-
-Weight (in pounds):
-<input class="ms-input" type="range" name="WEIGHT" value="175" min="10" max="300" onchange="updateTextInput(this.value, 'WEIGHT');">
-<input type="text" id="WEIGHTOutput" value="175">
-<br />
-
-
-Hours worked per Week:
-<input class="ms-input" type="range" name="HOUR" value="40" min="0" max="80" onchange="updateTextInput(this.value, 'HOUR');">
-<input type="text" id="HOUROutput" value="40">
-<br />
-
-
-Annual Salary:
-<input class="ms-input" type="range" name="SALARY" value="75000" min="0" max="300000" onchange="updateTextInput(this.value, 'SALARY');">
-<input type="text" id="SALARYOutput" value="75000">
-<br />
-
-
-Gender:
-<br>
-<input class="ms-input" type="radio" name="SEX" value="male" checked> Male<br>
-<input class="ms-input" type="radio" name="SEX" value="female"> Female
-<br />
-
-Born in the USA?
-<input class="ms-input" type="checkbox" id="BORNUSA" name="BORNUSA" checked>
-<br>
-
-Race:
-<br>
-<select class="ms-input" name="RACE">
-  <option value="1" selected>White</option>
-  <option value="2">Black</option>
-  <option value="3">American Indian/Alaskan</option>
-  <option value="4">Asia/Pacific Islander</option>
-  <option value="6">Multiple Races/Other</option>
-</select>
-<br>
-
-Marital Status:
-<br>
-<select class="ms-input" name="MARRY">
-  <option value="1" selected>Married</option>
-  <option value="2">Widowed</option>
-  <option value="3">Divorced</option>
-  <option value="4">Separated</option>
-  <option value="5">Never Married</option>
-  <option value="6">Under 16/Inapplicable</option>
-</select>
-
-<br>
-
-Education Level:
-<br>
-<select class="ms-input" name="EDU">
-  <option value="-1">Inapplicable or under 5</option>
-  <option value="1">Less than 8th grade</option>
-  <option value="2">9th-12th grade, no HS diploma</option>
-  <option value="13">GED or HS grad</option>
-  <option value="14">Some College or Associates Degree</option>
-  <option value="15" selected>Bachelor's Degree</option>
-  <option value="16">Masters, Doctorate, or Professional Degree</option>
-</select>
-<br>
-
-Do any of these conditions apply to you?
-<br>
-<input class="ms-input" type="checkbox" id="conditions" name="CANCER" unchecked> Cancer
-<br>
-<input class="ms-input" type="checkbox" id="conditions" name="DIAB" unchecked> Diabetes
-<br>
-<input class="ms-input" type="checkbox" id="conditions" name="PREG" unchecked> Pregnant
-
-</form>
+<div class="row">
+  <div class="columns small-12">
+    <h3>How much will I spend on health care this year?</h3>
+  </div>
 </div>
 
-<div style="width: 400px; overflow: auto; float: left">
-	<div id="pred">pred</div>
-	<div id="varpred">var</div>
-	<div id="zeropred">zero</div>
-	<div id="mean">zero</div>
-	<div id="median">zero</div>
-	<div id="zeropercent">zero</div>
-	<div id="maxpercent">zero</div>
+<div class="row">
+  <div class="columns medium-4">
+    <label>Gender</label>
+
+    <label><input class="ms-input" type="radio" name="SEX" value="male" checked> Male</label>
+    <label><input class="ms-input" type="radio" name="SEX" value="female"> Female</label>
+
+    <label for="AGE">Age</label>
+    <input type="range" name="AGE" class="ms-input ion" data-min="1" data-max="80" data-max-postfix="+" value="30" data-step="1" data-grid="true" data-grid-num="1" data-prefix="Age ">
+
+    <label for="HEIGHT">Height</label> 
+    <input type="range" name="HEIGHT" class="ms-input ion" data-min="10" data-max="100" data-max-postfix="+" value="70" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" inches">
+
+    <label for="WEIGHT">Weight</label>
+    <input type="range" name="WEIGHT" class="ms-input ion" data-min="10" data-max="300" data-max-postfix="+" value="175" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" lbs.">
+
+    <label>Race</label>
+    <select class="ms-input" name="RACE">
+      <option value="1">White</option>
+      <option value="2">Black</option>
+      <option value="3">American Indian / Alaskan</option>
+      <option value="4">Asian / Pacific Islander</option>
+      <option value="6">Multiracial / Other</option>
+    </select>
+
+    <label>
+      <input class="ms-input" type="checkbox" id="BORNUSA" name="BORNUSA" checked>
+      Born in the US
+    </label>
+
+
+    <label>Marital Status</label>
+    <select class="ms-input" name="MARRY">
+      <option value="5">Never Married</option>
+      <option value="1">Married</option>
+      <option value="3">Divorced</option>
+      <option value="4">Separated</option>
+      <option value="2">Widowed</option>
+      <option value="6">Under 16/Inapplicable</option>
+    </select>
+  
+
+
+    <label>Education level</label>
+    <select class="ms-input" name="EDU">
+      <option value="-1">Inapplicable or under 5</option>
+      <option value="1">Less than 8th grade</option>
+      <option value="2">9th-12th grade, no HS diploma</option>
+      <option value="13">GED or HS grad</option>
+      <option value="14">Some College or Associates Degree</option>
+      <option value="15" selected>Bachelor's Degree</option>
+      <option value="16">Masters, Doctorate, or Professional Degree</option>
+    </select>
+
+    <label>Hours worked per week</label>
+    <input type="range" name="HOUR" class="ms-input ion" data-min="0" data-max="80" value="40" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" hours">
+
+
+    <label>Annual Salary</label>
+    <input type="range" name="SALARY" class="ms-input ion" data-min="0" data-max="300000" value=50000 data-step="1000" data-grid="true" data-grid-num="1" data-prefix="$" data-prettify-separator=",">
+
+    <label for="conditions">Do any of these conditions apply to you?</label>
+    <label>
+      <input class="ms-input" type="checkbox" name="conditions" value="CANCER" unchecked> Cancer
+    </label>
+    <label>
+      <input class="ms-input" type="checkbox" name="conditions" value="DIAB" unchecked> Diabetes
+    </label>
+    <label>
+      <input class="ms-input" type="checkbox" name="conditions" value="PREG" unchecked> Pregnant
+    </label>
+  </div>
+  <div class="columns medium-8">
+
+    <h6>Simulation of 5,000 people like you: <span id="characteristics"></span></h6>
+
+    <ul>
+      <li id="zeropred"></li>
+      <li id="mean"></li>
+      <li id="median"></li>
+    </ul>
+
+    <p>Checks (to delete):</p>
+    <ul>
+      <li id="zeropercent"></li>
+      <li id="maxpercent"></li>
+    </ul>
+
+    <div id="info">&nbsp;</div>
+    <div id="histogram"></div>
+  </div>
 
 </div>
-<div id="myDiv" style="width: 800px; height: 400px; float:left">
-<!-- Plotly chart will be drawn inside this DIV -->
-	
-</div>
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+  REG = [{"coefficient":5.7118191,"_row":"intercept"},{"coefficient":0.37051526,"_row":"BORNUSATRUE"},{"coefficient":0.02669751,"_row":"AGE"},{"coefficient":0.00386059,"_row":"BMI"},{"coefficient":-0.04173176,"_row":"SEXTRUE"},{"coefficient":-0.17169312,"_row":"RACE2"},{"coefficient":-0.07324893,"_row":"RACE3"},{"coefficient":-0.0199615,"_row":"RACE4"},{"coefficient":0.1278432,"_row":"MARRY3"},{"coefficient":0.06748602,"_row":"MARRY4"},{"coefficient":0.03592124,"_row":"MARRY5"},{"coefficient":-0.05127251,"_row":"MARRY6"},{"coefficient":0.82857481,"_row":"CANCERTRUE"},{"coefficient":1.20860965,"_row":"DIABTRUE"},{"coefficient":0.03841797,"_row":"EDU1"},{"coefficient":0.08703419,"_row":"EDU2"},{"coefficient":0.07016228,"_row":"EDU14"},{"coefficient":0.1412765,"_row":"EDU15"},{"coefficient":0.30609197,"_row":"EDU16"},{"coefficient":-0.00574789,"_row":"HOUR"},{"coefficient":1.48159772,"_row":"PREGTRUE"},{"coefficient":-0.27043748,"_row":"EMPTRUE"},{"coefficient":0.29300893,"_row":"LT5TRUE"},{"coefficient":-0.0719929,"_row":"MT21TRUE"},{"coefficient":0.00503794,"_row":"EMPTRUE:SALARY"},{"coefficient":0.00935753,"_row":"RACE2:SALARY"},{"coefficient":-0.33828397,"_row":"RACE2:EMPTRUE"},{"coefficient":0.08713706,"_row":"RACE3:EMPTRUE"},{"coefficient":-0.25015361,"_row":"RACE4:EMPTRUE"},{"coefficient":-0.00030666,"_row":"RACE2:HOUR"},{"coefficient":0.00116804,"_row":"RACE4:HOUR"},{"coefficient":-0.00064687,"_row":"RACE6:HOUR"},{"coefficient":0.01145606,"_row":"DIABTRUE:MT21TRUE"},{"coefficient":-0.00577006,"_row":"AGE:DIABTRUE"},{"coefficient":0.36723875,"_row":"CANCERTRUE:MT21TRUE"},{"coefficient":-0.01001344,"_row":"AGE:CANCERTRUE"},{"coefficient":0.00036938,"_row":"AGE:BMI"},{"coefficient":0.00036958,"_row":"PREGTRUE:BMI2"},{"coefficient":-0.06859893,"_row":"AGE:LT5TRUE"},{"coefficient":-0.01367284,"_row":"AGE:LT10TRUE"},{"coefficient":0.10509925,"_row":"SEXTRUE:LT5TRUE"},{"coefficient":-0.09458024,"_row":"SEXTRUE:MT21TRUE"},{"coefficient":-0.00048413,"_row":"BMI:SEXTRUE"},{"coefficient":0.00018793,"_row":"SEXTRUE:BMI2"},{"coefficient":-0.2528542,"_row":"EDU1:MT21TRUE"},{"coefficient":-0.23954,"_row":"EDU2:MT21TRUE"},{"coefficient":-0.0061446,"_row":"EDU13:MT21TRUE"},{"coefficient":0.13959821,"_row":"EDU14:MT21TRUE"},{"coefficient":0.14596183,"_row":"EDU15:MT21TRUE"},{"coefficient":0.20300872,"_row":"EDU16:MT21TRUE"},{"coefficient":0.0675783,"_row":"RACE2:EDU1"},{"coefficient":0.16031546,"_row":"RACE3:EDU1"},{"coefficient":-0.10676456,"_row":"RACE4:EDU1"},{"coefficient":0.1441062,"_row":"RACE6:EDU1"},{"coefficient":0.11929083,"_row":"RACE2:EDU2"},{"coefficient":-0.10636505,"_row":"RACE3:EDU2"},{"coefficient":-0.11790017,"_row":"RACE6:EDU2"},{"coefficient":0.11020397,"_row":"RACE2:EDU13"},{"coefficient":-0.00094183,"_row":"RACE4:EDU13"},{"coefficient":0.56506431,"_row":"RACE6:EDU13"},{"coefficient":-0.08320317,"_row":"RACE2:EDU14"},{"coefficient":0.59719993,"_row":"RACE3:EDU14"},{"coefficient":0.09770357,"_row":"RACE4:EDU14"},{"coefficient":0.01640091,"_row":"RACE2:EDU15"},{"coefficient":0.32765095,"_row":"RACE3:EDU15"},{"coefficient":-0.02503894,"_row":"RACE4:EDU15"},{"coefficient":-0.00437086,"_row":"RACE2:EDU16"},{"coefficient":1.55434283,"_row":"RACE3:EDU16"},{"coefficient":-0.00335723,"_row":"RACE4:EDU16"},{"coefficient":0.02848301,"_row":"RACE2:MT21TRUE"},{"coefficient":0.2634568,"_row":"RACE3:MT21TRUE"},{"coefficient":-0.09515844,"_row":"RACE4:MT21TRUE"},{"coefficient":0.07419043,"_row":"RACE6:MT21TRUE"},{"coefficient":0.01497955,"_row":"RACE2:EMPTRUE:SALARY"},{"coefficient":0.0000496,"_row":"RACE2:HOUR:SALARY"},{"coefficient":-0.00081406,"_row":"RACE3:HOUR:SALARY"},{"coefficient":0.0004878,"_row":"RACE4:HOUR:SALARY"},{"coefficient":-0.00137192,"_row":"RACE2:HOUR:EMPTRUE"},{"coefficient":1.3558782e-06,"_row":"RACE4:HOUR:EMPTRUE"},{"coefficient":-0.00408682,"_row":"RACE6:HOUR:EMPTRUE"},{"coefficient":-0.00036672,"_row":"AGE:DIABTRUE:MT21TRUE"},{"coefficient":-0.0026568,"_row":"AGE:CANCERTRUE:DIABTRUE"},{"coefficient":-0.00049371,"_row":"AGE:BMI:PREGTRUE"},{"coefficient":-0.01392117,"_row":"AGE:SEXTRUE:LT5TRUE"},{"coefficient":0.01261023,"_row":"AGE:SEXTRUE:LT10TRUE"},{"coefficient":0.00055014,"_row":"AGE:SEXTRUE:MT21TRUE"},{"coefficient":-0.00202425,"_row":"AGE:BMI:LT5TRUE"},{"coefficient":-0.00125555,"_row":"AGE:BMI:LT10TRUE"},{"coefficient":-6.9030697e-15,"_row":"AGE:LT10TRUE:BMI2"},{"coefficient":-2.27027705e-06,"_row":"AGE:MT21TRUE:BMI2"},{"coefficient":0.01246259,"_row":"BMI:SEXTRUE:LT5TRUE"},{"coefficient":1.67779626e-14,"_row":"SEXTRUE:LT5TRUE:BMI2"},{"coefficient":-0.00256743,"_row":"BMI:SEXTRUE:MT21TRUE"},{"coefficient":0.17867221,"_row":"RACE2:EDU1:MT21TRUE"},{"coefficient":-0.97189698,"_row":"RACE3:EDU1:MT21TRUE"},{"coefficient":0.58610844,"_row":"RACE4:EDU1:MT21TRUE"},{"coefficient":0.2371598,"_row":"RACE6:EDU1:MT21TRUE"},{"coefficient":0.20823118,"_row":"RACE2:EDU2:MT21TRUE"},{"coefficient":-0.22303646,"_row":"RACE4:EDU2:MT21TRUE"},{"coefficient":0.25554015,"_row":"RACE6:EDU2:MT21TRUE"},{"coefficient":0.0574928,"_row":"RACE4:EDU13:MT21TRUE"},{"coefficient":-0.22804899,"_row":"RACE6:EDU13:MT21TRUE"},{"coefficient":0.09024015,"_row":"RACE2:EDU14:MT21TRUE"},{"coefficient":0.03452714,"_row":"RACE3:EDU14:MT21TRUE"},{"coefficient":0.00822568,"_row":"RACE2:EDU15:MT21TRUE"},{"coefficient":0.01190776,"_row":"RACE3:EDU15:MT21TRUE"},{"coefficient":-0.02867854,"_row":"RACE4:EDU15:MT21TRUE"},{"coefficient":0.03416423,"_row":"RACE6:EDU15:MT21TRUE"},{"coefficient":0.3653677,"_row":"RACE3:EDU16:MT21TRUE"},{"coefficient":-0.0031447,"_row":"RACE4:EDU16:MT21TRUE"},{"coefficient":0.00008839,"_row":"RACE2:HOUR:EMPTRUE:SALARY"},{"coefficient":-0.0077361,"_row":"AGE:BMI:SEXTRUE:LT5TRUE"},{"coefficient":0.00104059,"_row":"AGE:BMI:SEXTRUE:LT10TRUE"},{"coefficient":5.29818422e-15,"_row":"AGE:SEXTRUE:LT10TRUE:BMI2"},{"coefficient":4.41846503e-07,"_row":"AGE:SEXTRUE:MT21TRUE:BMI2"}];
+
+  VARREG = [{"coefficient":0.87628473,"_row":"intercept"},{"coefficient":-0.02326797,"_row":"BORNUSATRUE"},{"coefficient":-0.00080628,"_row":"AGE"},{"coefficient":-0.01846794,"_row":"RACE4"},{"coefficient":0.01086447,"_row":"RACE6"},{"coefficient":-0.00563395,"_row":"MARRY1"},{"coefficient":-0.01677739,"_row":"MARRY2"},{"coefficient":0.05255036,"_row":"MARRY3"},{"coefficient":0.04154195,"_row":"MARRY4"},{"coefficient":0.04305945,"_row":"MARRY5"},{"coefficient":0.06863026,"_row":"CANCERTRUE"},{"coefficient":-0.00389103,"_row":"EDU1"},{"coefficient":0.02669358,"_row":"EDU2"},{"coefficient":0.00563248,"_row":"EDU13"},{"coefficient":-0.03284735,"_row":"EDU15"},{"coefficient":-0.0428974,"_row":"EDU16"},{"coefficient":-0.00036233,"_row":"HOUR"},{"coefficient":-5.45642114e-07,"_row":"SALARY"},{"coefficient":-0.05174623,"_row":"LT10TRUE"},{"coefficient":0.08146424,"_row":"MT21TRUE"},{"coefficient":0.00004858,"_row":"BMI2"},{"coefficient":-0.00084755,"_row":"EMPTRUE:SALARY"},{"coefficient":-0.00050581,"_row":"HOUR:EMPTRUE"},{"coefficient":-0.00109045,"_row":"AGE:DIABTRUE"},{"coefficient":0.00836239,"_row":"CANCERTRUE:MT21TRUE"},{"coefficient":-0.00172019,"_row":"AGE:CANCERTRUE"},{"coefficient":0.00078581,"_row":"AGE:PREGTRUE"},{"coefficient":-0.00002443,"_row":"AGE:BMI"},{"coefficient":-0.0001861,"_row":"PREGTRUE:BMI2"},{"coefficient":-0.01997209,"_row":"AGE:LT5TRUE"},{"coefficient":-0.00800806,"_row":"AGE:LT10TRUE"},{"coefficient":0.00285976,"_row":"SEXTRUE:LT5TRUE"},{"coefficient":0.0445576,"_row":"SEXTRUE:MT21TRUE"},{"coefficient":-0.00117158,"_row":"BMI:LT10TRUE"},{"coefficient":0.0010097,"_row":"BMI:MT21TRUE"},{"coefficient":0.02041449,"_row":"EDU2:MT21TRUE"},{"coefficient":-0.02576368,"_row":"EDU15:MT21TRUE"},{"coefficient":-0.020869,"_row":"EDU16:MT21TRUE"},{"coefficient":-0.05360626,"_row":"RACE3:EDU1"},{"coefficient":-0.00196146,"_row":"RACE4:EDU1"},{"coefficient":0.06977811,"_row":"RACE3:EDU2"},{"coefficient":0.02962163,"_row":"RACE6:EDU2"},{"coefficient":-0.02656181,"_row":"RACE4:EDU13"},{"coefficient":-0.03844104,"_row":"RACE4:EDU14"},{"coefficient":0.03571612,"_row":"RACE6:EDU14"},{"coefficient":0.00181934,"_row":"RACE2:EDU15"},{"coefficient":0.53835521,"_row":"RACE3:EDU16"},{"coefficient":-0.00999486,"_row":"RACE4:EDU16"},{"coefficient":0.03047545,"_row":"RACE2:MT21TRUE"},{"coefficient":0.04904807,"_row":"RACE3:MT21TRUE"},{"coefficient":0.01673108,"_row":"RACE6:MT21TRUE"},{"coefficient":-0.00033433,"_row":"RACE2:EMPTRUE:SALARY"},{"coefficient":-5.02382889e-06,"_row":"RACE4:HOUR:SALARY"},{"coefficient":-7.85232815e-06,"_row":"AGE:CANCERTRUE:MT21TRUE"},{"coefficient":-0.00001457,"_row":"AGE:BMI:MT21TRUE"},{"coefficient":0.00167721,"_row":"BMI:SEXTRUE:LT5TRUE"},{"coefficient":-2.83199148e-06,"_row":"AGE:SEXTRUE:BMI2"},{"coefficient":0.07469922,"_row":"RACE2:EDU1:MT21TRUE"},{"coefficient":0.04886256,"_row":"RACE4:EDU1:MT21TRUE"},{"coefficient":0.23632585,"_row":"RACE6:EDU1:MT21TRUE"},{"coefficient":-0.03471702,"_row":"RACE2:EDU2:MT21TRUE"},{"coefficient":0.14242845,"_row":"RACE4:EDU2:MT21TRUE"},{"coefficient":0.06890856,"_row":"RACE2:EDU13:MT21TRUE"},{"coefficient":0.07619178,"_row":"RACE6:EDU13:MT21TRUE"},{"coefficient":0.00244886,"_row":"RACE2:EDU15:MT21TRUE"},{"coefficient":0.00005847,"_row":"RACE3:EDU16:MT21TRUE"},{"coefficient":-0.00313089,"_row":"RACE4:EDU16:MT21TRUE"},{"coefficient":-0.00001217,"_row":"RACE4:HOUR:EMPTRUE:SALARY"},{"coefficient":-5.80814878e-09,"_row":"AGE:SEXTRUE:MT21TRUE:BMI2"}];
+
+  ZEROREG = [{"coefficient":-0.34123827,"_row":"intercept"},{"coefficient":-0.74782104,"_row":"BORNUSATRUE"},{"coefficient":-0.02745342,"_row":"AGE"},{"coefficient":0.15389843,"_row":"SEXTRUE"},{"coefficient":0.26953653,"_row":"RACE2"},{"coefficient":0.32915516,"_row":"MARRY5"},{"coefficient":-0.27428795,"_row":"MARRY6"},{"coefficient":-1.00043299,"_row":"CANCERTRUE"},{"coefficient":-1.55901305,"_row":"DIABTRUE"},{"coefficient":0.44908151,"_row":"EDU13"},{"coefficient":-0.34647302,"_row":"EDU16"},{"coefficient":0.00328205,"_row":"HOUR"},{"coefficient":-1.54979907,"_row":"PREGTRUE"},{"coefficient":0.06841523,"_row":"EMPTRUE"},{"coefficient":-0.00086227,"_row":"SALARY"},{"coefficient":-0.46519102,"_row":"LT5TRUE"},{"coefficient":-0.1412764,"_row":"LT10TRUE"},{"coefficient":0.14585551,"_row":"MT21TRUE"},{"coefficient":-0.00121646,"_row":"EMPTRUE:SALARY"},{"coefficient":0.00007498,"_row":"HOUR:EMPTRUE"},{"coefficient":0.02336412,"_row":"RACE4:EMPTRUE"},{"coefficient":-0.00074193,"_row":"AGE:DIABTRUE"},{"coefficient":-0.00038825,"_row":"AGE:BMI"},{"coefficient":-0.13621429,"_row":"SEXTRUE:LT10TRUE"},{"coefficient":0.49482421,"_row":"SEXTRUE:MT21TRUE"},{"coefficient":-0.00006728,"_row":"BMI:LT5TRUE"},{"coefficient":-7.84638326e-08,"_row":"LT5TRUE:BMI2"},{"coefficient":0.65750255,"_row":"EDU1:MT21TRUE"},{"coefficient":0.53012753,"_row":"EDU2:MT21TRUE"},{"coefficient":-0.35663726,"_row":"EDU15:MT21TRUE"},{"coefficient":-0.14463465,"_row":"EDU16:MT21TRUE"},{"coefficient":-0.02877652,"_row":"RACE4:EDU1"},{"coefficient":0.02192628,"_row":"RACE2:EDU14"},{"coefficient":-0.15883148,"_row":"RACE6:EDU15"},{"coefficient":0.01553796,"_row":"RACE4:EDU16"},{"coefficient":-0.00668994,"_row":"BMI:SEXTRUE:LT10TRUE"},{"coefficient":-1.47500709e-06,"_row":"SEXTRUE:LT10TRUE:BMI2"},{"coefficient":-0.26741426,"_row":"RACE2:EDU1:MT21TRUE"},{"coefficient":-0.17200523,"_row":"RACE2:EDU2:MT21TRUE"},{"coefficient":0.00366836,"_row":"RACE2:EDU14:MT21TRUE"},{"coefficient":-0.00405492,"_row":"RACE6:EDU15:MT21TRUE"}];
+</script>
+
+
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="ion.rangeSlider.min.js"></script>
 <script src="medical_simulation.js"></script>
+
+
+<link rel="stylesheet" href="foundation.min.css">
+<link rel="stylesheet" href="ion.rangeSlider.css">
+<link rel="stylesheet" href="ion.rangeSlider.skinShiny.css">
+
+
+
+<style>
+  input[type=range] {
+    width: 100%;
+  }
+  #form {
+    margin-bottom: 1rem;
+  }
+  .irs-min, .irs-max {
+    display: none;
+  }
+  rect.bar {
+    fill: #11a3d5;
+  }
+</style>
