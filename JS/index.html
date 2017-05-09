@@ -15,12 +15,16 @@
     <input type="range" name="AGE" class="ms-input ion" data-min="1" data-max="80" data-max-postfix="+" value="30" data-step="1" data-grid="true" data-grid-num="1" data-prefix="Age ">
 
     <label for="HEIGHT">Height</label> 
-    <div style='width:48%; display:inline-block;'>
-    <input type="range" name="HEIGHTFT" class="ms-input ion" data-min="1" data-max="7" max="7" data-max-postfix="+" value="5" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" feet">
+
+    <div class="row">
+       <div class="columns medium-6">
+        <input type="range" name="HEIGHTFT" class="ms-input ion" data-min="1" data-max="7" max="7" data-max-postfix="+" value="5" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" ft.">
+      </div>
+      <div class="columns medium-6">
+        <input type="range" name="HEIGHTIN" class="ms-input ion" data-min="0" data-max="11" max="11" value="6" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" in.">
+      </div>
     </div>
-    <div style='width:48%; display:inline-block; float:right'>
-    <input type="range" name="HEIGHTIN" class="ms-input ion" data-min="0" data-max="11" max="11" data-max-postfix="+" value="6" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" inches">
-    </div>
+   
 
     <label for="WEIGHT">Weight</label>
     <input type="range" name="WEIGHT" class="ms-input ion" data-min="10" data-max="300" max="300" data-max-postfix="+" value="175" data-step="1" data-grid="true" data-grid-num="1" data-postfix=" lbs.">
@@ -83,12 +87,12 @@
   </div>
   <div class="columns medium-8">
 
-    <h6>We ran a simulation of <span id="iterations"></span> people like you based on historical data.  People like you use an <strong>average of <span id="mean"></span></strong> of health care per year, but the typical (median) person like you <strong>only uses <span id="median"></span></strong>.  The reason for this difference is that the top 2 percent use more than <strong><span id="toptwopercent"></span></strong>.  These outliers drive the average up without affecting the experience of the typical person. However, <strong><span id="zeropercent"></span> percent</strong> of people like you don't go to the doctor at all in a given year.</h6>
+    <p>We ran a simulation of <span id="iterations"></span> people like you based on historical data.  People like you use an <strong>average of <span id="mean"></span></strong> of health care per year, but the typical (median) person like you <strong>only uses <span id="median"></span></strong>.  The reason for this difference is that the top 2 percent use more than <strong><span id="toptwopercent"></span></strong>.  These outliers drive the average up without affecting the experience of the typical person. However, <strong><span id="zeropercent"></span> percent</strong> of people like you don't go to the doctor at all in a given year.</p>
 
     <div id="info">&nbsp;</div>
     <div id="histogram"></div>
 
-    <h6>How much you end up paying out-of-pocket depends both on your insurance plan structure (deductible, copays, etc.) as well as the discounts your insurer has negotiated with providers. The <a href="https://meps.ahrq.gov/mepsweb/">dataset</a> underlying records the <strong>sum of all payments made</strong> rather than the <strong>total amount billed</strong> because discounting is so prevalant that those numbers are often very different. It's likely that the bill you see is higher than the amount that actually gets paid for your care.</h6>
+    <p>How much you end up paying out-of-pocket depends both on your insurance plan structure (deductible, copays, etc.) as well as the discounts your insurer has negotiated with providers. The <a href="https://meps.ahrq.gov/mepsweb/">dataset</a> underlying records the <strong>sum of all payments made</strong> rather than the <strong>total amount billed</strong> because discounting is so prevalant that those numbers are often very different. It's likely that the bill you see is higher than the amount that actually gets paid for your care.</p>
 
   </div>
 
