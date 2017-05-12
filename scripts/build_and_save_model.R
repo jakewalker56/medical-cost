@@ -9,7 +9,15 @@ data = read.csv("processed_data.csv")
 #diabetes if they new about it going into the year
 data$DIAB <- data$DIAB & (data$AGE - data$DIABAGE > 1)
 #We should do this with Cancer as well, but looks like CANCERAGE isn't tracked in
-#the dataset
+#the dataset for privacy reasons
+
+data$BMIFACTOR[data$BMI < 18.5] <- "1"
+data$BMIFACTOR[data$BMI >= 18.5 & data$BMI < 25] <- "2"
+data$BMIFACTOR[data$BMI >= 25 & data$BMI < 30] <- "3"
+data$BMIFACTOR[data$BMI >= 30 & data$BMI < 40] <- "4"
+data$BMIFACTOR[data$BMI >= 40] <- "5"
+data$BMI <- data$BMIFACTOR
+data <- data[,-grep("BMIFACTOR", colnames(data))]
 
 #convert categorical variables to factors
 data$BORNUSA <- factor(data$BORNUSA)
@@ -24,11 +32,8 @@ data$SEX <- factor(data$SEX)
 data$LT5 <- factor(data$AGE < 5)
 data$LT10 <- factor(data$AGE < 10)
 data$MT21 <- factor(data$AGE > 21)
-factor_col_names <- c("BORNUSA", "SEX", "RACE", "MARRY", "CANCER", "DIAB", "EDU", "PREG","EMP", "LT5", "LT10", "MT21")
-
-#Normalize BMI to midpoint of "healthy"
-data$BMI <- abs(data$BMI - 22)
-data$BMI2 <- (data$BMI)^2
+data$BMI <- factor(data$BMI)
+factor_col_names <- c("BORNUSA", "SEX", "RACE", "MARRY", "CANCER", "DIAB", "EDU", "PREG","EMP", "LT5", "LT10", "MT21", "BMI")
 
 custom_levels = list(
   BORNUSA=levels(data$BORNUSA),
@@ -42,7 +47,8 @@ custom_levels = list(
   SEX=levels(data$SEX),
   LT5=levels(data$LT5),
   LT10=levels(data$LT10),
-  MT21=levels(data$MT21)
+  MT21=levels(data$MT21),
+  BMI=levels(data$BMI)
   )
 
 data$SALARY <- log(data$SALARY + 1)
@@ -52,7 +58,7 @@ zero_data <- data
 zero_data$is_zero <- zero_data$TOTEXP <= 0
 zero_data <- zero_data[,-grep("TOTEXP", colnames(zero_data))]
 
-custom_formula <- as.formula("~ . + SALARY*EMP*HOUR*RACE + MT21*AGE*DIAB*CANCER + AGE*PREG*(BMI+BMI2) + (LT5+LT10+MT21)*AGE*SEX*(BMI+BMI2) + EDU*MT21*RACE")
+custom_formula <- as.formula("~ . + SALARY*EMP*HOUR*RACE + MT21*AGE*DIAB*CANCER + AGE*PREG*BMI + (LT5+LT10+MT21)*AGE*SEX*BMI + EDU*MT21*RACE")
 yval <- log(nonzero_data$TOTEXP + 1)
 xval <- nonzero_data[,-grep(c("TOTEXP|DUID|PID|HRWG|PERWT|HASWG|DIABAGE"),colnames(nonzero_data))]
 xval <- sparse.model.matrix(
@@ -61,6 +67,7 @@ xval <- sparse.model.matrix(
 reg <- cv.gamlr(x=xval, y=yval, family="gaussian", lmr=1e-05, standardize=TRUE, obsweights=nonzero_data$PERWT)
 summary(reg)
 coef(reg, select="min")
+
 hist((predict(reg, newdata=xval, select="min"))[,1])
 hist(yval)
 
@@ -102,12 +109,12 @@ colnames(zeroregdf) <- c("coefficient")
 zeroregdf <- zeroregdf[zeroregdf$coefficient !=0,,drop=FALSE]
 write(toJSON(zeroregdf, digits=8), "zeroreg.json")
 
-test <- data.frame(BORNUSA=TRUE, AGE=30, BMI=3,
+test <- data.frame(BORNUSA=TRUE, AGE=30, BMI="3",
                    SEX=TRUE, RACE="1", MARRY="1", 
                    CANCER=FALSE, DIAB=FALSE, EDU="15", 
                    HOUR=40, PREG=FALSE, 
                    EMP=TRUE, SALARY=13.527829818844937,
-                   LT5=FALSE, LT10=FALSE, MT21=TRUE, BMI2=9)
+                   LT5=FALSE, LT10=FALSE, MT21=TRUE)
 for(col in factor_col_names) {
   {
     test[,col] <- factor(test[,col], levels=custom_levels[col][[1]])
@@ -133,8 +140,12 @@ hist(log(data[data$CANCER == TRUE, "TOTEXP"] + 1))
 
 1/(1+exp(-predict(zeroreg, newdata=matrix(testmat[1,],nrow=1), select="1se", type="link")))[,1]
 
-data
 log(sum(data$TOTEXP * data$PERWT)/sum(data$PERWT))
-
-summary(reg)
-coef(reg, select="min")
+plot(data$BMI, data$TOTEXP)
+hist(data$TOTEXP[data$PREG == TRUE & data$TOTEXP < 4000])
+sum(data$TOTEXP[data$PREG == TRUE]* data$PERWT[data$PREG == TRUE])/sum(data$PERWT[data$PREG == TRUE])
+hist(data$TOTEXP[data$PREG == TRUE])
+    
+plot(data$BMI)
+data[which.max(data$BMI),]
+summary(reg, select="min")

@@ -65,7 +65,7 @@
         .append('rect')
         .attr('class', 'bar')
         .on('mousemove', function(d, i) {
-          var phrase = commaFormat(bins[i].length) + ' people paid between ' + moneyFormat2(bins[i].x0) + ' and ' + moneyFormat2(bins[i].x1);
+          var phrase = commaFormat(d.length) + ' people paid between ' + moneyFormat2(d.x0) + ' and ' + moneyFormat2(d.x1);
           document.getElementById('info').innerHTML = phrase;
         })
         .on('mouseout', function() {
@@ -199,7 +199,9 @@
         var termresult = model[i]['coefficient'];
 
         // For interaction terms, we need to find the term for each piece and multiply them together
-        for(var term of model[i]['_row'].split(':')) {
+        var subterms = model[i]['_row'].split(':');
+        for(var j = 0; j < subterms.length; j++) {
+          var term = subterms[j];
           if(term.includes('TRUE')){
             // subtract out the level for boolean vars
             // e.g. BORNUSATRUE -> BORNUSA
