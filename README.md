@@ -1,6 +1,6 @@
 # medical-cost
 
-Try the app (here)[https://jakewalker56.shinyapps.io/medical-cost/]
+Try the app [here](https://jakewalker56.shinyapps.io/medical-cost/)
 
 This tool uses the Medical Expenditure Panel Survey data to simulate the distribution of total healthcare expenses you can expect to incur over the next year. Your final out-of-pocket expense depends on the type of insurance you have, and what percentage of your costs it covers. For reference, a 'Silver' plan under the ACA is one that is expected to cover about 70% of costs on average.
 
